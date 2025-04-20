@@ -15,11 +15,11 @@ export async function initKeyRotation(selectedProvider = null) {
     const db = client.db(process.env.DATABASE_NAME);
     const col = db.collection(process.env.COLLECTION_NAME_APIKEY);
 
-    // Lấy tất cả keys từ DB
-    const keys = await col.find({ active: true }).toArray();
-    if (!keys.length) throw new Error("❌ Không có key nào trong collection 'key_ai'");
 
-    // Phân loại keys theo provider
+    const keys = await col.find({ active: true }).toArray();
+    if (!keys.length) throw new Error(" Không có key nào trong collection 'key_ai'");
+
+
     providerKeys.gemini = keys.filter(k => k.provider === "gemini");
     providerKeys.openai = keys.filter(k => k.provider === "openai");
 
@@ -27,22 +27,22 @@ export async function initKeyRotation(selectedProvider = null) {
 
     // Xác định provider sẽ được sử dụng
     if (selectedProvider) {
-        // Nếu có chỉ định provider cụ thể
+
         if (selectedProvider === "gemini" && providerKeys.gemini.length > 0) {
             currentProvider = "gemini";
         } else if (selectedProvider === "openai" && providerKeys.openai.length > 0) {
             currentProvider = "openai";
         } else {
-            throw new Error(`❌ Không tìm thấy key nào cho provider ${selectedProvider}`);
+            throw new Error(` Không tìm thấy key nào cho provider ${selectedProvider}`);
         }
     } else {
-        // Nếu không chỉ định, dùng provider đầu tiên có sẵn
+
         if (providerKeys.gemini.length > 0) {
             currentProvider = "gemini";
         } else if (providerKeys.openai.length > 0) {
             currentProvider = "openai";
         } else {
-            throw new Error("❌ Không tìm thấy key nào cho Gemini hoặc OpenAI");
+            throw new Error(" Không tìm thấy key nào cho Gemini hoặc OpenAI");
         }
     }
 
@@ -56,8 +56,8 @@ export async function initKeyRotation(selectedProvider = null) {
         keyIndex = (keyIndex + 1) % keys.length;
     };
 
-    rotateKey(); // Gọi lần đầu tiên
-    setInterval(rotateKey, 5000); // Luân chuyển key mỗi 5 giây
+    rotateKey();
+    setInterval(rotateKey, 5000);
 }
 
 export function getProvider() {
