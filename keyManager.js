@@ -13,7 +13,7 @@ let providerKeys = {
 export async function initKeyRotation(selectedProvider = null) {
     await client.connect();
     const db = client.db(process.env.DATABASE_NAME);
-    const col = db.collection("key_ai");
+    const col = db.collection(process.env.COLLECTION_NAME_APIKEY);
 
     // Lấy tất cả keys từ DB
     const keys = await col.find({ active: true }).toArray();

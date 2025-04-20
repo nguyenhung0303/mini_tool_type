@@ -4,7 +4,7 @@ dotenv.config();
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const dbName = process.env.DATABASE_NAME;
-const collectionName = process.env.COLLECTION_NAME;
+const collectionName = process.env.COLLECTION_NAME_PRO;
 
 export async function processProducts(callback) {
   try {
